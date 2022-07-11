@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import StarContext from '../context/StarContext';
 
 function Table() {
@@ -6,6 +6,31 @@ function Table() {
   const [filterByName, setFilterByName] = useState({ name: '' });
   const [filterByNumericValues,
     setFilterByNumericValues] = useState([]);
+  const [filtedPlanets, setFiltedPlanets] = useState([]);
+  useEffect(() => {
+    setFiltedPlanets(planets);
+  }, [planets]);
+
+  const filterFunc = () => {
+    let filted = planets;
+    filterByNumericValues.forEach((filter) => {
+      if (filter.comparison === 'maior que') {
+        filted = filted.filter((planet) => planet[filter.column] > filter.value);
+      }
+      if (filter.comparison === 'menor que') {
+        filted = filted.filter((planet) => planet[filter.column] < filter.value);
+      }
+      if (filter.comparison === 'igual a') {
+        filted = filted.filter((planet) => Number(planet[filter
+          .column]) === filter.value);
+      }
+    });
+    setFiltedPlanets(filted);
+  };
+
+  useEffect(() => {
+    filterFunc();
+  }, [filterByNumericValues]);
 
   const handleName = ({ target }) => {
     setFilterByName({ name: target.value });
@@ -14,12 +39,11 @@ function Table() {
   const handleFilter = (e) => {
     const { target } = e;
     e.preventDefault();
-    setFilterByNumericValues({
+    setFilterByNumericValues([...filterByNumericValues, {
       column: target[1].value,
       comparison: target[2].value,
       value: Number(target[3].value),
-    });
-    console.log(filterByNumericValues);
+    }]);
   };
 
   return (
@@ -62,23 +86,8 @@ function Table() {
           </tr>
         </thead>
         <tbody>
-          {planets && planets
-            .filter(({ name }) => name.includes(filterByName.name))
-            .filter((planet) => {
-              if (filterByNumericValues.comparison === 'maior que') {
-                return planet[filterByNumericValues
-                  .column] > filterByNumericValues.value;
-              }
-              if (filterByNumericValues.comparison === 'menor que') {
-                return planet[filterByNumericValues
-                  .column] < filterByNumericValues.value;
-              }
-              if (filterByNumericValues.comparison === 'igual a') {
-                return Number(planet[filterByNumericValues
-                  .column]) === filterByNumericValues.value;
-              }
-              return true;
-            })
+          {filtedPlanets
+            .filter(({ name }) => name.toLowerCase().includes(filterByName.name))
             .map((planet, i) => (
               <tr key={ i + planet.name }>
                 <th scope="row">{planet.name}</th>
