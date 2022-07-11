@@ -30,7 +30,7 @@ function Table() {
 
   useEffect(() => {
     filterFunc();
-  }, [filterByNumericValues]);
+  }, [filterByNumericValues, filterFunc]);
 
   const handleName = ({ target }) => {
     setFilterByName({ name: target.value });
