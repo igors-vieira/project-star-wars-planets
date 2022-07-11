@@ -7,6 +7,13 @@ function Table() {
   const [filterByNumericValues,
     setFilterByNumericValues] = useState([]);
   const [filtedPlanets, setFiltedPlanets] = useState([]);
+  const [options, setOptions] = useState([
+    'population',
+    'orbital_period',
+    'diameter',
+    'rotation_period',
+    'surface_water',
+  ]);
   useEffect(() => {
     setFiltedPlanets(planets);
   }, [planets]);
@@ -30,7 +37,7 @@ function Table() {
 
   useEffect(() => {
     filterFunc();
-  }, [filterByNumericValues, filterFunc]);
+  }, [filterByNumericValues]);
 
   const handleName = ({ target }) => {
     setFilterByName({ name: target.value });
@@ -39,6 +46,8 @@ function Table() {
   const handleFilter = (e) => {
     const { target } = e;
     e.preventDefault();
+    console.log(setOptions);
+    setOptions(options.filter((op) => op !== target[1].value));
     setFilterByNumericValues([...filterByNumericValues, {
       column: target[1].value,
       comparison: target[2].value,
@@ -51,11 +60,9 @@ function Table() {
       <form onSubmit={ handleFilter }>
         <input type="text" data-testid="name-filter" onChange={ handleName } />
         <select data-testid="column-filter">
-          <option value="population">population</option>
-          <option value="diameter">diameter</option>
-          <option value="orbital_period">orbital_period</option>
-          <option value="rotation_period">rotation_period</option>
-          <option value="surface_water">surface_water</option>
+          {options.map((option, i) => (
+            <option key={ i + option } value={ option }>{option}</option>
+          ))}
         </select>
         <select data-testid="comparison-filter">
           <option value="maior que">maior que</option>
