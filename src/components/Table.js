@@ -6,6 +6,9 @@ function Table() {
   const [filterByName, setFilterByName] = useState({ name: '' });
   const [filterByNumericValues,
     setFilterByNumericValues] = useState([]);
+  const [coluna, setColuna] = useState('population');
+  const [comparacao, setComparacao] = useState('maior que');
+  const [numero, setNumero] = useState('');
   const [filtedPlanets, setFiltedPlanets] = useState([]);
   const [options, setOptions] = useState([
     'population',
@@ -22,10 +25,10 @@ function Table() {
     let filted = planets;
     filterByNumericValues.forEach((filter) => {
       if (filter.comparison === 'maior que') {
-        filted = filted.filter((planet) => planet[filter.column] > filter.value);
+        filted = filted.filter((planet) => Number(planet[filter.column]) > filter.value);
       }
       if (filter.comparison === 'menor que') {
-        filted = filted.filter((planet) => planet[filter.column] < filter.value);
+        filted = filted.filter((planet) => Number(planet[filter.column]) < filter.value);
       }
       if (filter.comparison === 'igual a') {
         filted = filted.filter((planet) => Number(planet[filter
@@ -44,32 +47,42 @@ function Table() {
   };
 
   const handleFilter = (e) => {
-    const { target } = e;
     e.preventDefault();
-    console.log(setOptions);
-    setOptions(options.filter((op) => op !== target[1].value));
+    console.log(coluna);
+    console.log(comparacao);
     setFilterByNumericValues([...filterByNumericValues, {
-      column: target[1].value,
-      comparison: target[2].value,
-      value: Number(target[3].value),
+      column: coluna,
+      comparison: comparacao,
+      value: Number(numero),
     }]);
+    setNumero('');
+    setColuna('population');
+    setOptions(options.filter((op) => op !== coluna));
   };
 
   return (
     <div>
       <form onSubmit={ handleFilter }>
         <input type="text" data-testid="name-filter" onChange={ handleName } />
-        <select data-testid="column-filter">
+        <select onChange={ (e) => setColuna(e.target.value) } data-testid="column-filter">
           {options.map((option, i) => (
             <option key={ i + option } value={ option }>{option}</option>
           ))}
         </select>
-        <select data-testid="comparison-filter">
+        <select
+          onChange={ (e) => setComparacao(e.target.value) }
+          data-testid="comparison-filter"
+        >
           <option value="maior que">maior que</option>
           <option value="menor que">menor que</option>
           <option value="igual a">igual a</option>
         </select>
-        <input type="number" defaultValue="0" data-testid="value-filter" />
+        <input
+          onChange={ (e) => setNumero(e.target.value) }
+          type="number"
+          defaultValue="0"
+          data-testid="value-filter"
+        />
         <button type="submit" data-testid="button-filter">
           Adicionar Filtro
         </button>

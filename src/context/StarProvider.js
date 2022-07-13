@@ -9,9 +9,8 @@ function StarProvider({ children }) {
       const endPoint = 'https://swapi-trybe.herokuapp.com/api/planets/';
       const response = await fetch(endPoint);
       const jsonResp = await response.json();
-      jsonResp.results.forEach((planeta) => delete planeta.residents);
-      // const deletResidents = jsonResp.results.filter((planet) => delete planet.residents);
-      setPlanets(jsonResp.results);
+      const deletedJson = jsonResp.results.filter((planeta) => delete planeta.residents);
+      setPlanets(deletedJson);
     };
     starApi();
   }, []);
