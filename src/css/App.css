@@ -1,0 +1,91 @@
+.App {
+  text-align: center;
+}
+
+body {
+  background-color: rgb(0, 0, 0);
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  
+}
+
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}
+
+
+td, th {
+  border: 1px solid rgb(209, 203, 38);
+  padding: 10px;
+}
+
+td {
+  text-align: center;
+  color: #fff;
+}
+
+/* tr:nth-child(even) { */
+  /* background-color: #eee; */
+/* } */
+
+th[scope="col"] {
+  background-color: rgba(18, 18, 18, 0.8);
+  color: #fff;
+}
+
+th[scope="row"] {
+  background-color: rgba(18, 18, 18, 0.8);
+  color: #fff;
+}
+
+caption {
+  padding: 10px;
+  caption-side: bottom;
+}
+
+table {
+  border-collapse: collapse;
+  border: 2px solid rgb(200, 200, 200);
+  letter-spacing: 1px;
+  font-family: sans-serif;
+  font-size: 0.8rem;
+
+}
+
+.image {
+  display: flex;
+  flex-basis: inherit;
+  justify-content: center;
+}
+
+.tables {
+  margin: 5rem;
+  border: 2rem solid rgba(18, 18, 18, 0.8);
+  overflow: auto;
+  background-color: #696969;
+}
+
+.black {
+  background-color: rgba(18, 18, 18, 0.8);
+  color: #fff;
+}
+
+.amarelo {
+  background-color: rgba(18, 18, 18, 0.8);
+  color: rgba(215, 225, 19, 0.856);
+  box-shadow: 2px 2px 2px 1px rgba(215, 225, 19, 0.856);
+}
+
+/* .black:active {
+  background-color: rgba(18, 18, 18, 0.8);
+  color: #fff;
+} */
+

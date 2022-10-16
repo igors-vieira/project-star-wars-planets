@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-max-depth */
 import React, { useContext, useEffect, useState } from 'react';
 import StarContext from '../context/StarContext';
 
@@ -61,16 +62,26 @@ function Table() {
   };
 
   return (
-    <div>
-      <form onSubmit={ handleFilter }>
-        <input type="text" data-testid="name-filter" onChange={ handleName } />
-        <select onChange={ (e) => setColuna(e.target.value) } data-testid="column-filter">
+    <div className="px-4 text-center flex">
+      <form className="input-group mb-3" onSubmit={ handleFilter }>
+        <input
+          type="text"
+          data-testid="name-filter"
+          onChange={ handleName }
+          className="form-floating black"
+        />
+        <select
+          onChange={ (e) => setColuna(e.target.value) }
+          className="form-select black"
+          data-testid="column-filter"
+        >
           {options.map((option, i) => (
             <option key={ i + option } value={ option }>{option}</option>
           ))}
         </select>
         <select
           onChange={ (e) => setComparacao(e.target.value) }
+          className="form-select black"
           data-testid="comparison-filter"
         >
           <option value="maior que">maior que</option>
@@ -80,55 +91,62 @@ function Table() {
         <input
           onChange={ (e) => setNumero(e.target.value) }
           type="number"
+          className="form-floating black"
           defaultValue="0"
           data-testid="value-filter"
         />
-        <button type="submit" data-testid="button-filter">
-          Adicionar Filtro
+        <button
+          type="submit"
+          className="btn btn-sm amarelo"
+          data-testid="button-filter"
+        >
+          Filtrar
         </button>
       </form>
-      <table>
-        <thead>
-          <tr>
-            <th scope="col">Nome</th>
-            <th scope="col">Período de rotação</th>
-            <th scope="col">Período orbital</th>
-            <th scope="col">Diametro</th>
-            <th scope="col">Clima</th>
-            <th scope="col">Gravidade</th>
-            <th scope="col">Terreno</th>
-            <th scope="col">Superfície da Água</th>
-            <th scope="col">População</th>
-            <th scope="col">Filmes</th>
-            <th scope="col">Feito Em</th>
-            <th scope="col">Editado</th>
-            <th scope="col">URL</th>
-          </tr>
-        </thead>
-        <tbody>
-          {filtedPlanets
-            .filter(({ name }) => name.toLowerCase().includes(filterByName.name))
-            .map((planet, i) => (
-              <tr key={ i + planet.name }>
-                <th scope="row">{planet.name}</th>
-                <td>{planet.rotation_period}</td>
-                <td>{planet.orbital_period}</td>
-                <td>{planet.diameter}</td>
-                <td>{planet.climate}</td>
-                <td>{planet.gravity}</td>
-                <td>{planet.terrain}</td>
-                <td>{planet.surface_water}</td>
-                <td>{planet.population}</td>
-                <td>
-                  {planet.films.map((film) => film)}
-                </td>
-                <td>{planet.created}</td>
-                <td>{planet.edited}</td>
-                <td>{planet.url}</td>
-              </tr>
-            ))}
-        </tbody>
-      </table>
+      <div className="tables container-sm">
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">Nome</th>
+              <th scope="col">Período de rotação</th>
+              <th scope="col">Período orbital</th>
+              <th scope="col">Diametro</th>
+              <th scope="col">Clima</th>
+              <th scope="col">Gravidade</th>
+              <th scope="col">Terreno</th>
+              <th scope="col">Superfície da Água</th>
+              <th scope="col">População</th>
+              <th scope="col">Filmes</th>
+              <th scope="col">Feito Em</th>
+              <th scope="col">Editado</th>
+              <th scope="col">URL</th>
+            </tr>
+          </thead>
+          <tbody>
+            {filtedPlanets
+              .filter(({ name }) => name.toLowerCase().includes(filterByName.name))
+              .map((planet, i) => (
+                <tr key={ i + planet.name }>
+                  <th scope="row">{planet.name}</th>
+                  <td>{planet.rotation_period}</td>
+                  <td>{planet.orbital_period}</td>
+                  <td>{planet.diameter}</td>
+                  <td>{planet.climate}</td>
+                  <td>{planet.gravity}</td>
+                  <td>{planet.terrain}</td>
+                  <td>{planet.surface_water}</td>
+                  <td>{planet.population}</td>
+                  <td>
+                    {planet.films.map((film) => film)}
+                  </td>
+                  <td>{planet.created}</td>
+                  <td>{planet.edited}</td>
+                  <td>{planet.url}</td>
+                </tr>
+              ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 }
